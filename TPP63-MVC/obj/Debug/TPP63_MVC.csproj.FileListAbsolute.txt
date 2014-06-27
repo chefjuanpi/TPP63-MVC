@@ -157,6 +157,7 @@ C:\Users\sabrina\Documents\GitHub\TPP63-MVC\TPP63-MVC\bin\Microsoft.Owin.Securit
 C:\Users\sabrina\Documents\GitHub\TPP63-MVC\TPP63-MVC\bin\Microsoft.Owin.Security.Google.xml
 C:\Users\sabrina\Documents\GitHub\TPP63-MVC\TPP63-MVC\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\sabrina\Documents\GitHub\TPP63-MVC\TPP63-MVC\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\sabrina\Documents\GitHub\TPP63-MVC\TPP63-MVC\obj\Debug\TPP63_MVC.csprojResolveAssemblyReference.cache
 C:\Users\sabrina\Documents\GitHub\TPP63-MVC\TPP63-MVC\obj\Debug\TPP63_MVC.dll
 C:\Users\sabrina\Documents\GitHub\TPP63-MVC\TPP63-MVC\obj\Debug\TPP63_MVC.pdb
+C:\Users\sabrina\Documents\GitHub\TPP63-MVC\TPP63-MVC\bin\TPP63_MVC.dll.config
+C:\Users\sabrina\Documents\GitHub\TPP63-MVC\TPP63-MVC\obj\Debug\TPP63_MVC.csprojResolveAssemblyReference.cache
