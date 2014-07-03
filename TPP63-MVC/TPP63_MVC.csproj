@@ -163,6 +163,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AvatarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -216,10 +217,33 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Avatars\bruce-lee.jpg" />
+    <Content Include="Images\Avatars\destructeur.jpg" />
+    <Content Include="Images\Avatars\dorami.jpg" />
+    <Content Include="Images\Avatars\Eva1.jpg" />
+    <Content Include="Images\Avatars\fullmetal-alchemist.jpg" />
+    <Content Include="Images\Avatars\Goku.jpg" />
+    <Content Include="Images\Avatars\Harry-Potter.jpg" />
+    <Content Include="Images\Avatars\iron-man.jpg" />
+    <Content Include="Images\Avatars\mario.jpg" />
+    <Content Include="Images\Avatars\metal-gear-solid.jpg" />
+    <Content Include="Images\Avatars\naruto.jpg" />
+    <Content Include="Images\Avatars\onepiece.jpg" />
+    <Content Include="Images\Avatars\Pink-Panter.jpg" />
+    <Content Include="Images\Avatars\popeye.jpg" />
+    <Content Include="Images\Avatars\Ryu-street-fighter.jpg" />
+    <Content Include="Images\Avatars\saint-seiya.jpg" />
+    <Content Include="Images\Avatars\sonic.jpg" />
+    <Content Include="Images\Avatars\spongebob.jpg" />
+    <Content Include="Images\Avatars\superman.jpg" />
+    <Content Include="Images\Avatars\wataru.jpg" />
+    <Content Include="Images\Avatars\Zelda.jpg" />
     <Content Include="Images\fotorama%402x.png" />
     <Content Include="Images\fotorama.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="App_Readme\Handlebarsjs_README.md" />
+    <Content Include="App_Readme\Handlebarsjs_LICENSE" />
     <EntityDeploy Include="Models\TPP63-MVC.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>TPP63-MVC.Designer.cs</LastGenOutput>
@@ -239,6 +263,14 @@
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fotorama.js" />
+    <Content Include="Scripts\handlebars.amd.js" />
+    <Content Include="Scripts\handlebars.amd.min.js" />
+    <Content Include="Scripts\handlebars.js" />
+    <Content Include="Scripts\handlebars.min.js" />
+    <Content Include="Scripts\handlebars.runtime.amd.js" />
+    <Content Include="Scripts\handlebars.runtime.amd.min.js" />
+    <Content Include="Scripts\handlebars.runtime.js" />
+    <Content Include="Scripts\handlebars.runtime.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -280,6 +312,8 @@
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Avatar\Index.cshtml" />
+    <Content Include="Views\Shared\_AvatarPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

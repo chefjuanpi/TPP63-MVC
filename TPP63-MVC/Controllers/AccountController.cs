@@ -39,6 +39,35 @@ namespace TPP63_MVC.Controllers
             }
         }
 
+        public JsonResult GetAvatars()
+        {
+            Models.AcroClusterEntities db = new Models.AcroClusterEntities();
+            var avatars = (from a in db.Avatars
+                           select new
+                           {
+                               IdAvatar = a.IDAvatar,
+                               Nom = a.Nom
+                           });
+            return Json(avatars, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetImg(int IDAvatar)
+        {
+            Models.AcroClusterEntities db = new Models.AcroClusterEntities();
+
+            var imagen = from i in db.Avatars
+                         where i.IDAvatar == IDAvatar
+                         select new
+                         {
+                             Source = i.Source,
+                             Id = i.IDAvatar,
+                             description = i.Description
+
+                         };
+            return Json(imagen, JsonRequestBehavior.AllowGet);
+
+        }
+
         //
         // GET: /Account/Login
         [AllowAnonymous]
@@ -91,6 +120,8 @@ namespace TPP63_MVC.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser() { UserName = model.UserName , Email = model.Email };
+                
+
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -465,6 +496,7 @@ namespace TPP63_MVC.Controllers
             }
             base.Dispose(disposing);
         }
+
 
         #region Helpers
         // Used for XSRF protection when adding external logins

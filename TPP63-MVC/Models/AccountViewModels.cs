@@ -73,6 +73,11 @@ namespace TPP63_MVC.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Avatar")]
+        public string Avatar { get; set; }
     }
 
     public class ResetPasswordViewModel

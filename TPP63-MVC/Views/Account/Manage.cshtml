@@ -18,6 +18,8 @@
             @Html.Partial("_SetPasswordPartial")
         }
 
+        @Html.Partial("_AvatarPartial")
+
         <section id="externalLogins">
             @Html.Action("RemoveAccountList")
             @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { Action = "LinkLogin", ReturnUrl = ViewBag.ReturnUrl })
