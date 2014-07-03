@@ -25,6 +25,9 @@ var G = { // G: Game
 
         G.Container = container;
 
+        G.Container.style.width = G.BLOCK_SIZE * G.width + 'px';
+        G.Container.style.height = G.BLOCK_SIZE * G.Height + 'px';
+
         Block.SetBlockSize(G.BLOCK_SIZE);
         G.FillGrid();
 
@@ -51,7 +54,8 @@ var G = { // G: Game
     CleanUpImgs: function() {
         for (var x = 0; x < G.Width; x++) {
             for (var y = 0; y < G.Height; y++) {
-                TryRemove(G.Grid[x][y].Image);
+                if (G.Grid[x][y] !== undefined)
+                    TryRemove(G.Grid[x][y].Image);
             }
         }
     },
@@ -66,10 +70,10 @@ var G = { // G: Game
 
         cluster.push(block);
 
-        if (x < G.Width - 1) cluster = G.GetSameColorCluster(x + 1, y, colorIndex, cluster);
-        if (x > 0) cluster = G.GetSameColorCluster(x - 1, y, colorIndex, cluster);
+        if (x < G.Width - 1)  cluster = G.GetSameColorCluster(x + 1, y, colorIndex, cluster);
+        if (x > 0)            cluster = G.GetSameColorCluster(x - 1, y, colorIndex, cluster);
         if (y < G.Height - 1) cluster = G.GetSameColorCluster(x, y + 1, colorIndex, cluster);
-        if (y > 0) cluster = G.GetSameColorCluster(x, y - 1, colorIndex, cluster);
+        if (y > 0)            cluster = G.GetSameColorCluster(x, y - 1, colorIndex, cluster);
 
         return cluster;
     },
@@ -110,7 +114,7 @@ var G = { // G: Game
     CleanUpFloodFill: function () {
         for (var x = 0; x < G.Width; x++) {
             for (var y = 0; y < G.Height; y++) {
-                if (G.Grid[x][y] != undefined)
+                if (G.Grid[x][y] !== undefined)
                     G.Grid[x][y].Visited = false;
             }
         }
