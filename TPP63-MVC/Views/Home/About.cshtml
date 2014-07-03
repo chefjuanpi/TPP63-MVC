@@ -4,4 +4,57 @@
 <h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<h3>Username</h3>
+
+<!-- Progression personnelle vs moyenne -->
+<div class="row">
+    <div class="col-md-3">
+        <select id="cboTimeSpan" onchange="UpdateGraphs()">
+            <option value="days:365000">Tous les temps</option>
+            <option value="days:1">24 dernières heures</option>
+            <option value="days:30">30 derniers jours</option>
+            <option value="days:365">Dernière année</option>
+            <option value="games:10">10 dernières parties</option>
+            <option value="games:50">50 dernières parties</option>
+            <option value="games:250">250 dernières parties</option>
+        </select>
+        <br />
+
+        <select id="cboSize" onchange="UpdateGraphs()">
+            <option value="any">Tous les tailles</option>
+            <option value="0">Petit</option>
+            <option value="1">Moyen</option>
+            <option value="2">Grand</option>
+        </select>
+        <br />
+
+        <select id="cboDifficulty" onchange="UpdateGraphs()">
+            <option value="any">Tous les difficultées</option>
+            <option value="0">Facile</option>
+            <option value="1">Moyen</option>
+            <option value="2">Difficile</option>
+            <option value="3">Extrème</option>
+        </select>
+        <br />
+    </div>
+
+    <div id="personalScoresGraph" class="col-md-9">
+        <!-- http://www.jqueryscript.net/chart-graph/JavaScript-Charts-With-SVG-xCharts.html -->
+    </div>
+</div>
+
+<!-- Top 10 -->
+<div class="row">
+    <div id="top10Graph" class="col-md-12">
+        <!-- http://designmodo.com/create-interactive-graph-css3-jquery/ -->
+    </div>
+</div>
+
+<!-- JS -->
+<script type="text/javascript">
+    UpdateGraphs = function () {
+        var timeSpan = ById('cboTimeSpan').options[ById('cboTimeSpan').selectedIndex].value;
+        var size = ById('cboSize').options[ById('cboSize').selectedIndex].value;
+        var difficulty = ById('cboDifficulty').options[ById('cboDifficulty').selectedIndex].value;
+    };
+</script>
