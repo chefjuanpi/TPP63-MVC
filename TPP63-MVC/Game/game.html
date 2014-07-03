@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <script type="text/javascript" src='Shortcuts.js'></script>
+    <script type="text/javascript" src='block.js'></script>
+    <script type="text/javascript" src='game.js'></script>
+    
+    <style>
+      #gameDiv {height: 600px; width: 800px; position: relative;}
+      
+      .gameBlock {height: 20px; width: 20px; position: absolute;}
+    </style>
+  </head>
+  
+  <body>
+    <div id='gameDiv'></div>
+  </body>
+  
+  <script type="text/javascript">
+    window.onload = function() {
+      G.Init(G.Sizes[2], G.Difficulties[0], ById('gameDiv'));
+    }
+  </script>
+</html>

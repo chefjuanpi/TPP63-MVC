@@ -213,8 +213,13 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\fotorama.css" />
+    <Content Include="Content\Game.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Game\block.js" />
+    <Content Include="Game\game.html" />
+    <Content Include="Game\game.js" />
+    <Content Include="Game\Shortcuts.js" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\Avatars\bruce-lee.jpg" />
@@ -240,6 +245,13 @@
     <Content Include="Images\Avatars\Zelda.jpg" />
     <Content Include="Images\fotorama%402x.png" />
     <Content Include="Images\fotorama.png" />
+    <Content Include="Images\Game\Blue Block.png" />
+    <Content Include="Images\Game\Cyan Block.png" />
+    <Content Include="Images\Game\Green Block.png" />
+    <Content Include="Images\Game\Orange Block.png" />
+    <Content Include="Images\Game\Purple Block.png" />
+    <Content Include="Images\Game\Red Block.png" />
+    <Content Include="Images\Game\Yellow Block.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="App_Readme\Handlebarsjs_README.md" />
