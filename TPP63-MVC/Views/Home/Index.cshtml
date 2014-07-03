@@ -18,11 +18,16 @@
 
 
 
-<div id="gameContainer">
-    @*ici le jeu, 
+<div class="jumbotron">
+    <div id="gameContainer"></div>
+    <div id="gameMenu">
+        Score: <div id="scoreDiv">0</div> <br />
+        <select id="cboSize"></select> <br />
+        <select id="cboDifficultyLevel"></select> <br />
+        <input id="cmdNewGame" type="button" value="Nouvelle partie" onclick="StartNewGame()"/>
+    </div>
 
-    <h1>ASP.NET</h1>
-    <p class="lead">IMPORTANT, utiliser HomeController et les view du dossier HOME, la homepage est View/Home/Index Pablo </p>
+    @*<p class="lead">IMPORTANT, utiliser HomeController et les view du dossier HOME, la homepage est View/Home/Index Pablo </p>
     <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a>  le DIV jumbotron est un bon place pour metre le jeu </p>*@
 </div>
 
@@ -49,7 +54,38 @@
 </div>
 
 <script type="text/javascript">
-    window.onload = function() {
+    window.onload = function () {
         G.Init(G.Sizes[2], G.Difficulties[0], ById('gameContainer'));
-    }
+
+        G.ScoreUpdated = function (clusterSize, newScore) {
+            scoreDiv.innerHTML = newScore;
+        };
+
+        // Initialize combo box des tailles de jeu.
+        cboSizeOpts = "<option value='0'>-- Taille --</option>";
+
+        for (var i = 0; i < G.Sizes.length; i++) {
+            cboSizeOpts += "<option value='" + i + "'>" + G.Sizes[i].Name + "</option>";
+        };
+
+        ById('cboSize').innerHTML = cboSizeOpts;
+
+        // Initialize combo box des niveaux de difficultés de jeu.
+        cboDiffLvlsOpts = "<option value='0'>-- Niveau de difficulté --</option>";
+
+        for (var i = 0; i < G.Difficulties.length; i++) {
+            cboDiffLvlsOpts += "<option value='" + i + "'>" + G.Difficulties[i].Name + "</option>";
+        };
+
+        ById('cboDifficultyLevel').innerHTML = cboDiffLvlsOpts;
+    };
+
+    StartNewGame = function () {
+        G.CleanUpImgs();
+
+        var newSize = ById('cboSize').options[ById('cboSize').selectedIndex].value;
+        var newDiff = ById('cboDifficultyLevel').options[ById('cboDifficultyLevel').selectedIndex].value;
+
+        G.Init(G.Sizes[newSize], G.Difficulties[newDiff], ById('gameContainer'));
+    };
 </script>
