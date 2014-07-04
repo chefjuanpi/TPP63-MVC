@@ -188,6 +188,9 @@
       <DependentUpon>TPP63-MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Score.cs">
+      <DependentUpon>TPP63-MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>TPP63-MVC.tt</DependentUpon>
     </Compile>
@@ -217,7 +220,6 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Game\block.js" />
-    <Content Include="Game\game.html" />
     <Content Include="Game\game.js" />
     <Content Include="Game\Shortcuts.js" />
     <Content Include="Global.asax" />

@@ -16,7 +16,7 @@
         <br />
 
         <select id="cboSize" style="margin-bottom:10px;" onchange="UpdateGraphs()">
-            <option value="any">Toutes les tailles</option>
+            <option value="-1">Toutes les tailles</option>
             <option value="0">Petit</option>
             <option value="1">Moyen</option>
             <option value="2">Grand</option>
@@ -24,7 +24,7 @@
         <br />
 
         <select id="cboDifficulty" onchange="UpdateGraphs()">
-            <option value="any">Toutes les difficultées</option>
+            <option value="-1">Toutes les difficultées</option>
             <option value="0">Facile</option>
             <option value="1">Moyen</option>
             <option value="2">Difficile</option>
@@ -34,8 +34,7 @@
     </div>
 
     <div id="personalScoresGraphDiv" class="col-md-9">
-        <!-- http://www.jqueryscript.net/chart-graph/JavaScript-Charts-With-SVG-xCharts.html -->
-        <figure style="width: 400px; height: 300px;" id="personalScoresGraph"></figure>
+        <figure style="width: 400px; height: 300px;" id="personalScoresGraph"></figure> <!-- Doc: http://www.jqueryscript.net/chart-graph/JavaScript-Charts-With-SVG-xCharts.html -->
     </div>
 </div>
 
@@ -52,8 +51,7 @@
     </div>
 
     <div id="top10GraphDiv" class="col-md-9">
-        <!-- http://designmodo.com/create-interactive-graph-css3-jquery/ -->
-        <figure style="width: 400px; height: 300px;" id="top10Graph"></figure>
+        <figure style="width: 400px; height: 300px;" id="top10Graph"></figure> <!-- Doc: http://designmodo.com/create-interactive-graph-css3-jquery/ -->
     </div>
 </div>
 
@@ -65,79 +63,60 @@
         var size = ById('cboSize').options[ById('cboSize').selectedIndex].value;
         var difficulty = ById('cboDifficulty').options[ById('cboDifficulty').selectedIndex].value;
 
-        DrawPersonalScoresGraph();
-        DrawTop10Graph();
+        $.getJSON("../Home/GetProgression", { GameSpan: gameSpan, Size: size, Difficulty: difficulty }, DrawPersonalScoresGraph);
+        $.getJSON("../Home/GetTop10Scores", { TimeSpan: timeSpan, Size: size, Difficulty: difficulty }, DrawTop10Graph);
+
+        // Note to self: http://www.quora.com/How-did-Akshat-Bubna-become-so-good-at-programming/answer/Akshat-Bubna?__snids__=530116243&__nsrc__=2
     };
 
-    DrawPersonalScoresGraph = function () {
-        var data = {
-            "xScale": "linear",
+    DrawPersonalScoresGraph = function (scores) {
+        var scoresData = [];
+
+        for (var i = 0; i < scores.length; i++) {
+            scoresData[i] = {
+                "x": i,
+                "y": scores[i]
+            }
+        };
+
+        var graphData = {
+            "xScale": "ordinal",
             "yScale": "linear",
             "type": "line",
             "main": [
               {
                   "className": ".pizza",
-                  "data": [
-                    {
-                        "x": 0,
-                        "y": 111
-                    },
-                    {
-                        "x": 1,
-                        "y": 22222
-                    },
-                    {
-                        "x": 2,
-                        "y": 555553
-                    },
-                    {
-                        "x": 3,
-                        "y": 33333
-                    },
-                    {
-                        "x": 4,
-                        "y": 444442
-                    },
-                    {
-                        "x": 5,
-                        "y": 22222
-                    },
-                    {
-                        "x": 6,
-                        "y": 2221
-                    }
-                  ]
+                  "data": scoresData
               }
             ]
         };
-        var myChart = new xChart('line', data, '#personalScoresGraph');
+        new xChart('line', graphData, '#personalScoresGraph');
     };
 
-    DrawTop10Graph = function () {
-        var data = {
+    DrawTop10Graph = function (scores) {
+        var scoresData = [];
+
+        for (var i = 0; i < scores.length; i++) {
+            scoresData[i] = {
+                "x": scores[i].User,
+                "y": scores[i].Score
+            }
+        };
+
+        var graphData = {
             "xScale": "ordinal",
             "yScale": "linear",
             "main": [
               {
                   "className": ".pizza",
-                  "data": [
-                    {
-                        "x": "Pepperoni",
-                        "y": 4
-                    },
-                    {
-                        "x": "Cheese",
-                        "y": 8
-                    }
-                  ]
+                  "data": scoresData
               }
             ]
         };
-        var myChart = new xChart('bar', data, '#top10Graph');
+        new xChart('bar', graphData, '#top10Graph');
     };
 
     window.onload = function () {
-        DrawPersonalScoresGraph();
-        DrawTop10Graph();
+        UpdateGraphs();
     };
 </script>

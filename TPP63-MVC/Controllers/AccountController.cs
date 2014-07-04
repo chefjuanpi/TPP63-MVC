@@ -41,7 +41,7 @@ namespace TPP63_MVC.Controllers
 
         public JsonResult GetAvatars()
         {
-            Models.AcroClusterEntities db = new Models.AcroClusterEntities();
+            Models.Entities db = new Models.Entities();
             var avatars = (from a in db.Avatars
                            select new
                            {
@@ -53,7 +53,7 @@ namespace TPP63_MVC.Controllers
 
         public JsonResult GetImg(int IDAvatar)
         {
-            Models.AcroClusterEntities db = new Models.AcroClusterEntities();
+            Models.Entities db = new Models.Entities();
 
             var imagen = from i in db.Avatars
                          where i.IDAvatar == IDAvatar

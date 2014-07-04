@@ -12,12 +12,14 @@ namespace TPP63_MVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagram
+    public partial class Score
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int ScoreID { get; set; }
+        public int Score1 { get; set; }
+        public byte TailleJeu { get; set; }
+        public byte NiveauDifficulte { get; set; }
+        public Nullable<System.DateTime> DateScore { get; set; }
+    
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }
