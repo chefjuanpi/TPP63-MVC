@@ -217,3 +217,4 @@ C:\Users\1336274\Documents\GitHub\TPP63-MVC\TPP63-MVC\bin\fr\EntityFramework.res
 C:\Users\1336274\Documents\GitHub\TPP63-MVC\TPP63-MVC\obj\Debug\TPP63_MVC.csprojResolveAssemblyReference.cache
 C:\Users\1336274\Documents\GitHub\TPP63-MVC\TPP63-MVC\obj\Debug\TPP63_MVC.dll
 C:\Users\1336274\Documents\GitHub\TPP63-MVC\TPP63-MVC\obj\Debug\TPP63_MVC.pdb
+C:\Users\1336287\Documents\GitHub\TPP63-MVC\TPP63-MVC\bin\fr\EntityFramework.resources.dll

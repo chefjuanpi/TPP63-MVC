@@ -1,13 +1,41 @@
 ﻿@using TPP63_MVC.Models;
+
 @using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "Manage Account";
 }
 
+<script id="imgTemplate" type="text/x-handlebars-template">
+        {{#each}}
+        <img src="../Images/Avatars/{{Source}}" id="{{Id}}" />
+        <p><b>Description :</b>{{description}}</p>
+        {{/each}}
+</script>
+
+<script type="text/javascript">
+    templateImg = null;
+    $(function () {
+        templateImg = Handlebars.compile($("#imgTemplate").html());
+        $.getJSON("../Avatar/GetImg2", { IDuser: "@User.Identity.GetUserId()"  }, function (data) {
+            var result = templateImg(data);
+            $("#imgcontainer").html(result);
+        });
+    });
+</script>
+
+
+
+
+
 <h2>@ViewBag.Title.</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div class="row">
+<p>You're logged in as <strong>@User.Identity.GetUserName()</strong>.</p>
+
+<div id="imgcontainer"></div>
+
+
     <div class="col-md-12">
         @if (ViewBag.HasLocalPassword)
         {

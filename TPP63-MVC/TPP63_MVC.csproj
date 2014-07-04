@@ -170,44 +170,44 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetRole.cs">
-      <DependentUpon>TPP63-MVC.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUser.cs">
-      <DependentUpon>TPP63-MVC.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUserClaim.cs">
-      <DependentUpon>TPP63-MVC.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AspNetUserLogin.cs">
-      <DependentUpon>TPP63-MVC.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Avatar.cs">
-      <DependentUpon>TPP63-MVC.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\C__MigrationHistory.cs">
-      <DependentUpon>TPP63-MVC.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Score.cs">
-      <DependentUpon>TPP63-MVC.tt</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>TPP63-MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TPP63-MVC.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TPP63-MVC.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TPP63-MVC.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TPP63-MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\TPP63-MVC.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>TPP63-MVC.edmx</DependentUpon>
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -258,22 +258,22 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="App_Readme\Handlebarsjs_README.md" />
     <Content Include="App_Readme\Handlebarsjs_LICENSE" />
-    <EntityDeploy Include="Models\TPP63-MVC.edmx">
+    <EntityDeploy Include="Models\Model.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>TPP63-MVC.Designer.cs</LastGenOutput>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\TPP63-MVC.Context.tt">
+    <Content Include="Models\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TPP63-MVC.edmx</DependentUpon>
-      <LastGenOutput>TPP63-MVC.Context.cs</LastGenOutput>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\TPP63-MVC.edmx.diagram">
-      <DependentUpon>TPP63-MVC.edmx</DependentUpon>
+    <Content Include="Models\Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\TPP63-MVC.tt">
+    <Content Include="Models\Model.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>TPP63-MVC.edmx</DependentUpon>
-      <LastGenOutput>TPP63-MVC.cs</LastGenOutput>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\fotorama.js" />

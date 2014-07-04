@@ -3,9 +3,12 @@
     ViewBag.Title = "Registrer";
 }
 
+
+
 <h2>@ViewBag.Title.</h2>
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
+    @Html.HiddenFor(model => model.Avatar, new { id = "avatar123" })
     <div class="row">
         <section id="registerForm">
             <div class="col-md-4">
@@ -40,10 +43,62 @@
                 </div>
 
             </div>
-            
+
             <div class="col-md-8">
                 <h4>Selectioner un Avatar dans la liste</h4>
-                @Html.Partial("_AvatarPartial")
+
+                <style>
+                    .Avatar:hover {
+                        cursor: pointer;
+                        color: red;
+                    }
+                </style>
+
+
+                <script id="AvatarsTemplate" type="text/x-handlebars-template">
+                    {{#each}}
+
+                    <b class="Avatar" id="{{IdAvatar}}">{{Nom}}</b>
+                    <br />
+                    {{/each}}
+                </script>
+
+                <script id="imgTemplate" type="text/x-handlebars-template">
+                    {{#each}}
+                    <img src="../Images/Avatars/{{Source}}" id="{{Id}}" />
+                    <p><b>Description :</b>{{description}}</p>
+                    {{/each}}
+                </script>
+                <script type="text/javascript">
+    templateAvatars = null;
+    templateImg = null;
+        $(function () {
+
+            templateAvatars = Handlebars.compile($("#AvatarsTemplate").html());
+            templateImg = Handlebars.compile($("#imgTemplate").html());
+            $.getJSON("../Avatar/GetAvatars", null, function (data) {
+                console.log(data.length);
+                    var result = templateAvatars(data);
+                    $("#avatarList").html(result);
+                    $(".Avatar").click(function () {
+                        var id = this.id;
+                        $("#avatar123").val(id);
+
+                        console.log(id);
+                        $.getJSON("../Avatar/GetImg", { IDAvatar: id }, function(data){
+                            var result = templateImg(data);
+                            $("#imgcontainer").html(result);
+                        });
+                    });
+                });
+            });
+                </script>
+
+                <div class="row">
+
+                    <div id="imgcontainer" class="col-md-6"></div>
+                    <div id="avatarList" class="col-md-6"></div>
+                </div>
             </div>
 
             <div class="form-group">
@@ -65,3 +120,5 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+

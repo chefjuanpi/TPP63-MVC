@@ -42,5 +42,20 @@ namespace TPP63_MVC.Controllers
 
         }
 
+        public JsonResult GetImg2(string IDuser)
+        {
+            Models.Entities db = new Models.Entities();
+
+            var imagen = from i in db.AspNetUsers
+                         where i.Id == IDuser
+                         select new
+                         {
+                             Source = i.Avatar.Source,
+                             Id = i.Avatar.IDAvatar,
+                             description = i.Avatar.Description
+                         };
+            return Json(imagen, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }
