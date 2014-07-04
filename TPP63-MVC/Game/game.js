@@ -3,10 +3,10 @@ var G = { // G: Game
     CLUSTER_MIN_SIZE: 3,
 
     Difficulties: [
-      { Name: "Facile", PieceCount: 3 },
-      { Name: "Moyen", PieceCount: 4 },
-      { Name: "Difficile", PieceCount: 5 },
-      { Name: "Extreme", PieceCount: 6 }
+      { Name: "Facile",     PieceCount: 3 },
+      { Name: "Moyen",      PieceCount: 4 },
+      { Name: "Difficile",  PieceCount: 5 },
+      { Name: "Extreme",    PieceCount: 6 }
     ],
 
     Sizes: [

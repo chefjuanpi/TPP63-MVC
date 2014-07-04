@@ -13,7 +13,7 @@ namespace TPP63_MVC.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult HallOfFame()
         {
             ViewBag.Message = "Your application description page.";
 

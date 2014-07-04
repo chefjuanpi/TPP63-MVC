@@ -12,9 +12,15 @@
 
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0-alpha.4/handlebars.min.js"></script>
 
+    <!-- Game -->
     <script type="text/javascript" src='../../Game/Shortcuts.js'></script>
     <script type="text/javascript" src='../../Game/block.js'></script>
     <script type="text/javascript" src='../../Game/game.js'></script>
+
+    <!-- Graph -->
+    <script src="../../Scripts/JS xCharts/d3.v2.min.js"></script>
+    <pre class="brush:js;" style="width: 1549.888916015625px;"><script src="../../Scripts/JS xCharts/xcharts.min.js"></script>
+    <link rel="stylesheet" href="../../Scripts/JS xCharts/xcharts.min.css"></pre>
 
 </head>
 <body>
@@ -30,7 +36,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Table de Honnor", "About", "Home")</li>
+                    <li>@Html.ActionLink("Table de Honnor", "HallOfFame", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -40,7 +46,6 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
 
