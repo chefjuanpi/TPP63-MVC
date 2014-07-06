@@ -56,5 +56,56 @@ namespace TPP63_MVC.Controllers
             return Json(new[] { new { User = "John", Score = 11445 }, new { User = "Peter", Score = 17445 }, new { User = "Bart", Score = 13245 } }, JsonRequestBehavior.AllowGet);
             return Json(scores, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult CreateScore(String username, int size, int difficulty)
+        {
+            Models.Entities db = new Models.Entities();
+            
+            Score score = new Score {
+                // Username
+                Size = size,
+                Difficulty = difficulty
+            };
+
+            db.Scores.InsertOnSubmit(score);
+
+            try {
+                db.SubmitChanges();
+            }
+            catch (Exception ex) {
+                // db. revert changes?
+            
+                return Json(-1, JsonRequestBehavior.AllowGet);
+            }
+            
+            var scoreID = (from s in db.Scores
+                          orderby s.DateScore descending
+                          select s.ScoreID
+                          ).First();
+            
+            return Json(scoreID, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult UpdateScore(int scoreID, int newScore)
+        {
+            Models.Entities db = new Models.Entities();
+            
+            var score = (from s in db.Scores
+                         s.ScoreID == scoreID
+                         select s).Single();
+                         
+            score.Score1 = newScore;
+
+            try {
+                db.SubmitChanges();
+            }
+            catch (Exception ex) {
+                // db. revert changes?
+            
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+            
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
     }
 }

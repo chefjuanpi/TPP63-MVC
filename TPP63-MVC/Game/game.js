@@ -16,6 +16,8 @@ var G = { // G: Game
     ],
 
     Init: function (size, difficulty, container) {
+        G.HasGameStarted = false;
+    
         G.Score = 0;
 
         G.Width = size.Width;
@@ -121,12 +123,15 @@ var G = { // G: Game
     },
 
     OnClick: function (e) {
+        if (!G.HasGameStarted) {
+            G.GameStarted();
+            G.HasGameStarted = true;
+        }
+        
         var containerAbsPos = $(G.Container).offset();
 
         var x = Math.floor((e.x - containerAbsPos.left) / G.BLOCK_SIZE);
         var y = Math.floor((e.y - containerAbsPos.top) / G.BLOCK_SIZE);
-
-        console.log("X: " + x + "; Y: " + y);
 
         var block = G.Grid[x][y];
 
@@ -145,4 +150,5 @@ var G = { // G: Game
     },
 
     ScoreUpdated: function (clusterSize, newScore) { }
+    GameStarted: function () { }
 };

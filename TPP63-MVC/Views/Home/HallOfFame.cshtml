@@ -65,8 +65,6 @@
 
         $.getJSON("../Home/GetProgression", { GameSpan: gameSpan, Size: size, Difficulty: difficulty }, DrawPersonalScoresGraph);
         $.getJSON("../Home/GetTop10Scores", { TimeSpan: timeSpan, Size: size, Difficulty: difficulty }, DrawTop10Graph);
-
-        // Note to self: http://www.quora.com/How-did-Akshat-Bubna-become-so-good-at-programming/answer/Akshat-Bubna?__snids__=530116243&__nsrc__=2
     };
 
     DrawPersonalScoresGraph = function (scores) {

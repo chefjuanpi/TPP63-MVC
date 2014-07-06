@@ -35,16 +35,35 @@
         </div>
     </div>
 
-    @*<p class="lead">IMPORTANT, utiliser HomeController et les view du dossier HOME, la homepage est View/Home/Index Pablo </p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a>  le DIV jumbotron est un bon place pour metre le jeu </p>*@
+    @*<p class="lead">IMPORTANT, utiliser HomeController et les view du dossier HOME, la homepage est View/Home/Index Pablo </p>*@
 </div>
 
 <script type="text/javascript">
     window.onload = function () {
+        // Initialize jeu
         G.Init(G.Sizes[2], G.Difficulties[0], ById('gameContainer'));
 
+        G.GameStarted = function() {
+            /*<input id="username" type="hidden" value="@User.Identity.Name" />
+            var username = ById('txtUsername').value;
+                
+            $.getJSON("../Home/CreateScore", { Username: username, Size: size, Difficulty: difficulty }, function(scoreID) {
+                G.ScoreID = scoreID;
+                
+                if (G.ScoreID === -1) {
+                    alert("Il y a eu une erreur lors de la création de cette partie et votre pointage ne pourra pas être sauvegarder. Contactez l'administrateur si cette erreur persiste.");
+                };
+            });*/
+        };
+        
         G.ScoreUpdated = function (clusterSize, newScore) {
             scoreDiv.innerHTML = "Score: " + newScore;
+            
+            if (G.ScoreID !== -1) {
+                /*$.getJSON("../Home/UpdateScore", { ScoreID: G.ScoreID, NewScore: newScore }, function(updateSuccessful) {
+                    
+                });*/
+            }
         };
 
         // Initialize combo box des tailles de jeu.
