@@ -33,27 +33,27 @@ namespace TPP63_MVC.Controllers
         {
             Models.Entities db = new Models.Entities();
             var scores = (from s in db.Scores
-                          where size == -1 ? true : s.TailleJeu == size &&
-                                difficulty == -1 ? true : s.NiveauDifficulte == difficulty
+                          where (size == -1 ? true : s.TailleJeu == size) &&
+                                (difficulty == -1 ? true : s.NiveauDifficulte == difficulty)
                           orderby s.DateScore
                           select s.Score1
                           ).Take(gameSpan);
             return Json(scores, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetTop10Scores(int timeSpan, int size, int difficulty)
+        public JsonResult GetTop5Scores(int timeSpan, int size, int difficulty)
         {
             Models.Entities db = new Models.Entities();
             var scores = (from s in db.Scores
-                          where size == -1 ? true : s.TailleJeu == size &&
-                                difficulty == -1 ? true : s.NiveauDifficulte == difficulty &&
-                                DbFunctions.DiffSeconds(DateTime.Now, s.DateScore) < timeSpan * 24 * 60 * 60
+                          where (size == -1 ? true : s.TailleJeu == size) &&
+                                (difficulty == -1 ? true : s.NiveauDifficulte == difficulty)// &&
+                                //(DbFunctions.DiffSeconds(DateTime.Now, s.DateScore) < timeSpan * 24 * 60 * 60)
                           orderby s.Score1 descending
                           select new
                           {
                               User = s.AspNetUser.UserName,
                               Score = s.Score1
-                          }).Take(10).ToList();
+                          }).Take(5);
             return Json(scores, JsonRequestBehavior.AllowGet);
         }
 

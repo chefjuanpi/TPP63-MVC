@@ -4,25 +4,30 @@
 @*<h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>*@
 
+<!-- Documentation pour graphs: http://www.jqueryscript.net/chart-graph/JavaScript-Charts-With-SVG-xCharts.html -->
+
+<!---------------------------------------- Graph haut ---------------------------------------->
 <h3 style="color:blue;">Progression personnelle</h3>
 
-<div class="row">
-    <div class="col-md-3">
-        <select id="cboGameSpan" style="margin-bottom:10px;" onchange="UpdateGraphs()">
+<div class="row" style="margin-bottom: 20px;">
+    <div class="col-md-2">
+        <select id="cboGameSpan" onchange="UpdateGraphs()">
             <option value="10">10 dernières parties</option>
             <option value="50">50 dernières parties</option>
             <option value="250">250 dernières parties</option>
         </select>
-        <br />
+    </div>
 
-        <select id="cboSize" style="margin-bottom:10px;" onchange="UpdateGraphs()">
+    <div class="col-md-2">
+        <select id="cboSize" onchange="UpdateGraphs()">
             <option value="-1">Toutes les tailles</option>
             <option value="0">Petit</option>
             <option value="1">Moyen</option>
             <option value="2">Grand</option>
         </select>
-        <br />
+    </div>
 
+    <div class="col-md-2">
         <select id="cboDifficulty" onchange="UpdateGraphs()">
             <option value="-1">Toutes les difficultées</option>
             <option value="0">Facile</option>
@@ -30,17 +35,19 @@
             <option value="2">Difficile</option>
             <option value="3">Extrème</option>
         </select>
-        <br />
-    </div>
-
-    <div id="personalScoresGraphDiv" class="col-md-9">
-        <figure style="width: 400px; height: 300px;" id="personalScoresGraph"></figure> <!-- Doc: http://www.jqueryscript.net/chart-graph/JavaScript-Charts-With-SVG-xCharts.html -->
     </div>
 </div>
 
-<h3 style="color:blue;">Meilleurs parties</h3>
-
 <div class="row">
+    <div id="personalScoresGraphDiv" class="col-md-9">
+        <figure style="width: 800px; height: 300px;" id="personalScoresGraph"></figure>
+    </div>
+</div>
+
+<!----------------------------------------- Graph bas ----------------------------------------->
+<h3 style="color:blue;">Top 5</h3>
+
+<div class="row" style="margin-bottom: 20px;">
     <div class="col-md-3">
         <select id="cboTimeSpan" onchange="UpdateGraphs()">
             <option value="365000">Tous les temps</option>
@@ -49,13 +56,41 @@
             <option value="365">Dernière année</option>
         </select>
     </div>
+</div>
 
-    <div id="top10GraphDiv" class="col-md-9">
-        <figure style="width: 400px; height: 300px;" id="top10Graph"></figure> <!-- Doc: http://designmodo.com/create-interactive-graph-css3-jquery/ -->
+<div class="row">
+    <div id="top5GraphDiv" class="col-md-9">
+        <figure style="width: 800px; height: 300px;" id="top5Graph"></figure>
     </div>
 </div>
 
-<!-- JS -->
+<!---------------------------------------- Top 5 tableau ---------------------------------------->
+<div class="row" style="margin-left:20px; margin-top: 20px;">
+    <table class="col-md-3">
+        <tr>
+            <td class="top5Username"></td>
+            <td class="top5Score"></td>
+        </tr>
+        <tr>
+            <td class="top5Username"></td>
+            <td class="top5Score"></td>
+        </tr>
+        <tr>
+            <td class="top5Username"></td>
+            <td class="top5Score"></td>
+        </tr>
+        <tr>
+            <td class="top5Username"></td>
+            <td class="top5Score"></td>
+        </tr>
+        <tr>
+            <td class="top5Username"></td>
+            <td class="top5Score"></td>
+        </tr>
+    </table>
+</div>
+
+<!---------------------------------------- JS ---------------------------------------->
 <script type="text/javascript">
     UpdateGraphs = function () {
         var timeSpan = ById('cboTimeSpan').options[ById('cboTimeSpan').selectedIndex].value;
@@ -64,15 +99,15 @@
         var difficulty = ById('cboDifficulty').options[ById('cboDifficulty').selectedIndex].value;
 
         $.getJSON("../Home/GetProgression", { GameSpan: gameSpan, Size: size, Difficulty: difficulty }, DrawPersonalScoresGraph);
-        $.getJSON("../Home/GetTop10Scores", { TimeSpan: timeSpan, Size: size, Difficulty: difficulty }, DrawTop10Graph);
+        $.getJSON("../Home/GetTop5Scores", { TimeSpan: timeSpan, Size: size, Difficulty: difficulty }, DrawTop5Graph);
     };
 
     DrawPersonalScoresGraph = function (scores) {
-        var scoresData = [];
+        var scoresData = [{"x": 0, "y": 0}];
 
         for (var i = 0; i < scores.length; i++) {
             scoresData[i] = {
-                "x": i,
+                "x": (i+1),
                 "y": scores[i]
             }
         };
@@ -91,14 +126,17 @@
         new xChart('line', graphData, '#personalScoresGraph');
     };
 
-    DrawTop10Graph = function (scores) {
-        var scoresData = [];
+    DrawTop5Graph = function (scores) {
+        var scoresData = [{ "x": "Aucune données", "y": 0 }];
 
         for (var i = 0; i < scores.length; i++) {
             scoresData[i] = {
-                "x": scores[i].User,
+                "x": (i + 1),// + "-" + scores[i].User.substring(0, 15),
                 "y": scores[i].Score
             }
+            
+            ByClass('top5Username')[i].innerHTML = (i + 1) + " - " + scores[i].User;
+            ByClass('top5Score')[i].innerHTML = scores[i].Score;
         };
 
         var graphData = {
@@ -111,7 +149,8 @@
               }
             ]
         };
-        new xChart('bar', graphData, '#top10Graph');
+
+        new xChart('bar', graphData, '#top5Graph');
     };
 
     window.onload = function () {
