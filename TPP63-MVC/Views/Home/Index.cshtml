@@ -1,7 +1,15 @@
-﻿@{
+﻿@using Microsoft.AspNet.Identity;
+
+@{
     ViewBag.Title = "Home Page";
 }
- 
+
+@if (Request.IsAuthenticated) {
+    <input id="username" type="hidden" value='@Html.Encode(User.Identity.Name)' />
+}
+else {
+    <input id="username" type="hidden" value='' />
+}
 
 <div class="jumbotron">
     ICI la galerie d'imagenes qui serve comme guide du jeu, sont fait ou dernier avec immpresions d'ecran
@@ -47,28 +55,37 @@
         // Initialize jeu
         G.Init(G.Sizes[2], G.Difficulties[0], ById('gameContainer'));
 
+        @if (!Request.IsAuthenticated) {
+            <text>
+            G.OnClick = function() {
+                alert("Vous devez être connecté pour jouer à ce jeu!");
+                window.location.replace ("../Account/Register");
+            }
+            </text>
+        }
+
         G.GameStarted = function() {
-            /*<input id="username" type="hidden" value="" />
-            var username = ById('txtUsername').value;
+            var username = '@Html.Encode(User.Identity.GetUserId())';
+            var size = G.Size.Index;
+            var difficulty = G.Difficulty.Index;
                 
             $.getJSON("../Home/CreateScore", { Username: username, Size: size, Difficulty: difficulty }, function(scoreID) {
                 G.ScoreID = scoreID;
-                
+                console.log("ScoreID: " + G.ScoreID);
                 if (G.ScoreID === -1) {
                     alert("Il y a eu une erreur lors de la création de cette partie et votre pointage ne pourra pas être sauvegarder. Contactez l'administrateur si cette erreur persiste.");
-                };
-            });*/
+                }
+            });
         };
         
         G.ScoreUpdated = function (clusterSize, newScore) {
             scoreDiv.innerHTML = "Score: " + newScore;
             $.Prix(clusterSize);
 
-            
             if (G.ScoreID !== -1) {
-                /*$.getJSON("../Home/UpdateScore", { ScoreID: G.ScoreID, NewScore: newScore }, function(updateSuccessful) {
-                    
-                });*/
+                $.getJSON("../Home/UpdateScore", { ScoreID: G.ScoreID, NewScore: newScore }, function(updateSuccessful) {
+                    console.log("Success: " + updateSuccessful);
+                });
             }
         };
 

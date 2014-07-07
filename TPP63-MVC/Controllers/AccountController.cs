@@ -126,22 +126,22 @@ namespace TPP63_MVC.Controllers
                 var guid = user.Id;
                 int avg = model.Avatar;
 
-                Models.Entities db = new Entities();
-                AspNetUser u = db.AspNetUsers.Single(us => us.Id == guid);
-                u.IdAvatar = avg;
-                
-                try
-                {
-                    await db.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    // Provide for exceptions.
-                }
-
                 if (result.Succeeded)
                 {
+                    Models.Entities db = new Entities();
+                    AspNetUser u = db.AspNetUsers.Single(us => us.Id == guid);
+                    u.IdAvatar = avg;
+
+                    try
+                    {
+                        await db.SaveChangesAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        // Provide for exceptions.
+                    }
+
                     await SignInAsync(user, isPersistent: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
