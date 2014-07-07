@@ -4,18 +4,24 @@
     ViewBag.Title = "Home Page";
 }
 
+@if (!Request.IsAuthenticated)
+{
+<br />
 <div class="jumbotron">
-    ICI la galerie d'imagenes qui serve comme guide du jeu, sont fait ou dernier avec immpresions d'ecran
-
-    <div class="fotorama" data-width="700" data-ratio="700/467" data-max-width="100%">
+    <div class="fotorama" data-width=95% data-ratio="800/450" data-max-width="100%" data-autoplay="3000"
+data-allowfullscreen="true" data-transition="slide">
     
-      @*<img src="1-lo.jpg">
-      <img src="2-lo.jpg">
-      <img src="9-lo.jpg">
-      <img src="6-lo.jpg">
-      <img src="5-lo.jpg">*@
+<img src="~/Images/galerie/01.png">     
+ <img src="~/Images/galerie/02.png">
+      
+      <img src="~/Images/galerie/03.png">
+      <img src="~/Images/galerie/04.png">
+      <img src="~/Images/galerie/05.png">
     </div>
 </div>
+}
+
+<br />
 
 
 
@@ -27,21 +33,42 @@
         </div>
 
         <div class="col-md-3">
+            <div id="imgactuel"></div>
             <div id="gameMenu">
-                <div id="prixContainer">
-                    <i id="PrixLogo" style="font-size:200px; color:#33053e" ></i>
-                    <h3 id="wow"></h3>
-                </div>
-                <div id="scoreDiv">Score: 0</div> <br />
-                <select id="cboSize"></select> <br />
-                <select id="cboDifficultyLevel"></select> <br />
+                <i id="PrixLogo" style="font-size:200px; color:#33053e" ></i>
+                <h3 id="wow"></h3>
+                <div id="scoreDiv" >Score: 0</div> <br /> 
+                <select id="cboSize" style="margin-bottom:7px;"></select> <br />
+                <select id="cboDifficultyLevel" style="margin-bottom:7px;"></select> <br />
                 <input id="cmdNewGame" type="button" value="Nouvelle partie" onclick="StartNewGame()"/>
             </div>
+
         </div>
     </div>
 
-    @*<p class="lead">IMPORTANT, utiliser HomeController et les view du dossier HOME, la homepage est View/Home/Index Pablo </p>*@
 </div>
+
+@section Scripts {
+
+@Scripts.Render("~/bundles/jquery-ui")
+
+<script id="imgTemplate" type="text/x-handlebars-template">
+        {{#each}}
+        <img src="../Images/Avatars/{{Source}}" id="{{Id}}" />
+        <p><b>Description :</b>{{description}}</p>
+        {{/each}}
+</script>
+
+<script type="text/javascript">
+    templateImg = null;
+    $(function () {
+        templateImg = Handlebars.compile($("#imgTemplate").html());
+        $.getJSON("../Avatar/GetImg2", { IDuser: "@User.Identity.GetUserId()"  }, function (data) {
+            var result = templateImg(data);
+            $("#imgactuel").html(result);
+        });
+    });
+</script>
 
 <script type="text/javascript">
     window.onload = function () {
@@ -111,43 +138,53 @@
         G.Init(G.Sizes[newSize], G.Difficulties[newDiff], ById('gameContainer'));
     };
 
+    function callback() {
+        setTimeout(function() {
+            $( "#gameContainer" ).removeAttr( "style" ).hide().fadeIn();
+        }, 100 );
+    };
+
     $.Prix = function (clusterSize) {
         if (clusterSize < 5) {
             icon = "";
             msg = ""; 
-            c= 'black'; 
+            c= "black"; 
         }
         else if (clusterSize > 5 && clusterSize < 11) {
             c = "red";
             icon = 'fa fa-flag';
-            msg = "wow!! " + clusterSize + " Clusters";
-           
+            msg = "wow!! " + clusterSize + " Bloques";
         }
         else if (clusterSize > 10 && clusterSize < 16) {
             c = "black";
             icon = 'fa fa-flag-checkered';
-            msg = "wow!! " + clusterSize + " Clusters";
+            msg = "wow!! " + clusterSize + " Bloques";
+            
         }
         else if (clusterSize > 15 && clusterSize < 26) {
             c = "blue";
             icon = 'fa fa-gamepad';
-            msg = "Acro!! " + clusterSize + " Clusters";
+            msg = "Acro!! " + clusterSize + " Bloques";
         }
         else if (clusterSize > 25 && clusterSize < 51) {
             c = "#ff6a00";
             icon = 'fa fa-graduation-cap';
-            msg = "Niveau des Éxperts " + clusterSize + " Clusters";
+            msg = "Niveau des Éxperts " + clusterSize + " Bloques";
         }
         else if (clusterSize > 50 && clusterSize < 101) {
             c = "#33053e";
             icon = 'fa fa-trophy';
-            msg = "Machine!! " + clusterSize + " Clusters";
+            msg = "Machine!! " + clusterSize + " Bloques";
+            $( "#gameContainer" ).effect( "highlight", null, 700, callback );
         }
         else if (clusterSize > 100) {
             c = "green";
             icon = 'fa fa-reddit';
-            msg = "Alien!! " + clusterSize + " Clusters";
+            msg = "Alien!! " + clusterSize + " Bloques";
+            $( "#gameContainer" ).effect( "highlight", null, 2000, callback );
         }
+
+
 
         $("#PrixLogo").css('color', c);
         $("#PrixLogo").removeAttr("class");
@@ -155,5 +192,7 @@
         wow.innerHTML = msg;
 
 
-    }
+    };
+
 </script>
+}

@@ -1,12 +1,17 @@
-﻿@{
-    ViewBag.Title = "About";
+﻿@using Microsoft.AspNet.Identity;
+
+@{
+    ViewBag.Title = "Table de Honnor";
 }
 @*<h2>@ViewBag.Title.</h2>
 <h3>@ViewBag.Message</h3>*@
 
-<!-- Documentation pour graphs: http://www.jqueryscript.net/chart-graph/JavaScript-Charts-With-SVG-xCharts.html -->
+<!-- Documentation pour graphs: http://tenxer.github.io/xcharts/ -->
+@Styles.Render("~/Content/graphcss")
 
 <!---------------------------------------- Graph haut ---------------------------------------->
+@if (Request.IsAuthenticated)
+{
 <h3 style="color:blue;">Progression personnelle</h3>
 
 <div class="row" style="margin-bottom: 20px;">
@@ -43,29 +48,12 @@
         <figure style="width: 800px; height: 300px;" id="personalScoresGraph"></figure>
     </div>
 </div>
-
-<!----------------------------------------- Graph bas ----------------------------------------->
-<h3 style="color:blue;">Top 5</h3>
-
-<div class="row" style="margin-bottom: 20px;">
-    <div class="col-md-3">
-        <select id="cboTimeSpan" onchange="UpdateGraphs()">
-            <option value="365000">Tous les temps</option>
-            <option value="1">24 dernières heures</option>
-            <option value="30">30 derniers jours</option>
-            <option value="365">Dernière année</option>
-        </select>
-    </div>
-</div>
-
-<div class="row">
-    <div id="top5GraphDiv" class="col-md-9">
-        <figure style="width: 800px; height: 300px;" id="top5Graph"></figure>
-    </div>
-</div>
+}
 
 <!---------------------------------------- Top 5 tableau ---------------------------------------->
-<div class="row" style="margin-left:20px; margin-top: 20px;">
+<h3 style="color:blue;">Top 5</h3>
+
+<div class="row" style="margin: 20px 0px 20px 20px;">
     <table class="col-md-3">
         <tr>
             <td class="top5Username"></td>
@@ -90,65 +78,97 @@
     </table>
 </div>
 
+<!----------------------------------------- Graph bas ----------------------------------------->
+<div class="row">
+    <div id="top5GraphDiv" class="col-md-9">
+        <figure style="width: 800px; height: 300px;" id="top5Graph"></figure>
+    </div>
+</div>
+
 <!---------------------------------------- JS ---------------------------------------->
+
+@Scripts.Render("~/bundles/xcharts")
 <script type="text/javascript">
     UpdateGraphs = function () {
-        var timeSpan = ById('cboTimeSpan').options[ById('cboTimeSpan').selectedIndex].value;
-        var gameSpan = ById('cboGameSpan').options[ById('cboGameSpan').selectedIndex].value;
-        var size = ById('cboSize').options[ById('cboSize').selectedIndex].value;
-        var difficulty = ById('cboDifficulty').options[ById('cboDifficulty').selectedIndex].value;
+        var userID = '@Html.Encode(User.Identity.GetUserId())';
 
-        $.getJSON("../Home/GetProgression", { GameSpan: gameSpan, Size: size, Difficulty: difficulty }, DrawPersonalScoresGraph);
-        $.getJSON("../Home/GetTop5Scores", { TimeSpan: timeSpan, Size: size, Difficulty: difficulty }, DrawTop5Graph);
+        if ( userID == "")
+        {
+            var gameSpan = 10;
+            var size = -1;
+            var difficulty = -1;
+        }
+        else{
+            var gameSpan =   ById('cboGameSpan').options[ById('cboGameSpan').selectedIndex].value;
+            var size =       ById('cboSize').options[ById('cboSize').selectedIndex].value;
+            var difficulty = ById('cboDifficulty').options[ById('cboDifficulty').selectedIndex].value;
+        }
+
+
+
+
+        $.getJSON("../Home/GetProgression", { UserID: userID, GameSpan: gameSpan, Size: size, Difficulty: difficulty }, DrawPersonalScoresGraph);
+        $.getJSON("../Home/GetTop5Scores", { Size: size, Difficulty: difficulty }, DrawTop5Graph);
+        console.log(userID);
+        console.log(gameSpan);
+        console.log(size); console.log(difficulty);
+
     };
 
     DrawPersonalScoresGraph = function (scores) {
-        var scoresData = [{"x": 0, "y": 0}];
+        var scoresData = [{ "x": 0, "y": 0 }];
 
         for (var i = 0; i < scores.length; i++) {
             scoresData[i] = {
-                "x": (i+1),
+                "x": (i + 1),
                 "y": scores[i]
-            }
-        };
+    }
+    };
 
         var graphData = {
             "xScale": "ordinal",
             "yScale": "linear",
             "type": "line",
             "main": [
-              {
+    {
                   "className": ".pizza",
                   "data": scoresData
-              }
-            ]
-        };
+    }
+    ]
+    };
         new xChart('line', graphData, '#personalScoresGraph');
     };
 
     DrawTop5Graph = function (scores) {
+        var i;
         var scoresData = [{ "x": "Aucune données", "y": 0 }];
 
-        for (var i = 0; i < scores.length; i++) {
+        for (i = 0; i < scores.length; i++) {
             scoresData[i] = {
                 "x": (i + 1),// + "-" + scores[i].User.substring(0, 15),
                 "y": scores[i].Score
-            }
-            
+    }
+
             ByClass('top5Username')[i].innerHTML = (i + 1) + " - " + scores[i].User;
             ByClass('top5Score')[i].innerHTML = scores[i].Score;
-        };
+    };
+
+        while (i < 5) {
+            ByClass('top5Username')[i].innerHTML = "";
+            ByClass('top5Score')[i].innerHTML = "";
+            i++;
+    }
 
         var graphData = {
             "xScale": "ordinal",
             "yScale": "linear",
             "main": [
-              {
+    {
                   "className": ".pizza",
                   "data": scoresData
-              }
-            ]
-        };
+    }
+    ]
+    };
 
         new xChart('bar', graphData, '#top5Graph');
     };
