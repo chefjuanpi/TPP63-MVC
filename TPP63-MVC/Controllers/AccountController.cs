@@ -128,6 +128,20 @@ namespace TPP63_MVC.Controllers
 
                 if (result.Succeeded)
                 {
+                    Models.Entities db = new Entities();
+                    AspNetUser u = db.AspNetUsers.Single(us => us.Id == guid);
+                    u.IdAvatar = avg;
+
+                    try
+                    {
+                        await db.SaveChangesAsync();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        // Provide for exceptions.
+                    }
+
                     await SignInAsync(user, isPersistent: false);
 
                     await sauverAvatar(guid, avg);

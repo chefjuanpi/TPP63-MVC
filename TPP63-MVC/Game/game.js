@@ -3,16 +3,16 @@ var G = { // G: Game
     CLUSTER_MIN_SIZE: 3,
 
     Difficulties: [
-      { Name: "Facile",     PieceCount: 3 },
-      { Name: "Moyen",      PieceCount: 4 },
-      { Name: "Difficile",  PieceCount: 5 },
-      { Name: "Extreme",    PieceCount: 6 }
+      { Index: 0, Name: "Facile", PieceCount: 3 },
+      { Index: 1, Name: "Moyen", PieceCount: 4 },
+      { Index: 2, Name: "Difficile", PieceCount: 5 },
+      { Index: 3, Name: "Extreme", PieceCount: 6 }
     ],
 
     Sizes: [
-      { Name: "Petit", Width: 20, Height: 20 },
-      { Name: "Moyen", Width: 30, Height: 25 },
-      { Name: "Grand", Width: 40, Height: 30 },
+      { Index: 0, Name: "Petit", Width: 20, Height: 20 },
+      { Index: 1, Name: "Moyen", Width: 30, Height: 25 },
+      { Index: 2, Name: "Grand", Width: 40, Height: 30 },
     ],
 
     Init: function (size, difficulty, container) {
@@ -23,6 +23,7 @@ var G = { // G: Game
         G.Width = size.Width;
         G.Height = size.Height;
 
+        G.Size = size;
         G.Difficulty = difficulty;
 
         G.Container = container;
@@ -130,8 +131,11 @@ var G = { // G: Game
         
         var containerAbsPos = $(G.Container).offset();
 
-        var x = Math.floor((e.x - containerAbsPos.left) / G.BLOCK_SIZE);
-        var y = Math.floor((e.y - containerAbsPos.top) / G.BLOCK_SIZE);
+        var scrollY = window.pageYOffset || document.documentElement.scrollTop
+        var scrollX = window.pageXOffset || document.documentElement.scrollLeft
+
+        var x = Math.floor((e.x - containerAbsPos.left + scrollX) / G.BLOCK_SIZE);
+        var y = Math.floor((e.y - containerAbsPos.top + scrollY) / G.BLOCK_SIZE);
 
         var block = G.Grid[x][y];
 

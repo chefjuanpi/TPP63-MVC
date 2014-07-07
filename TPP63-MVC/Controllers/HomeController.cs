@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -34,10 +35,9 @@ namespace TPP63_MVC.Controllers
             var scores = (from s in db.Scores
                           where size == -1 ? true : s.TailleJeu == size &&
                                 difficulty == -1 ? true : s.NiveauDifficulte == difficulty
-                          orderby s.DateScore descending
+                          orderby s.DateScore
                           select s.Score1
                           ).Take(gameSpan);
-            return Json(new int[] { 3, 8, 7, 2, 7, 4, 2, 5, 7, 9, 7, 6, 4, 2, 5, 3, 3, 6, 9, 4, 2, 5, 7, 8, 6, 4, 3, 5, 6, 7, 8 }, JsonRequestBehavior.AllowGet);
             return Json(scores, JsonRequestBehavior.AllowGet);
         }
 
@@ -47,14 +47,13 @@ namespace TPP63_MVC.Controllers
             var scores = (from s in db.Scores
                           where size == -1 ? true : s.TailleJeu == size &&
                                 difficulty == -1 ? true : s.NiveauDifficulte == difficulty &&
-                                DateTime.Today - s.DateScore < TimeSpan.FromDays((double)timeSpan)
+                                DbFunctions.DiffSeconds(DateTime.Now, s.DateScore) < timeSpan * 24 * 60 * 60
                           orderby s.Score1 descending
                           select new
                           {
                               User = s.AspNetUser.UserName,
                               Score = s.Score1
-                          });
-            return Json(new[] { new { User = "John", Score = 11445 }, new { User = "Peter", Score = 17445 }, new { User = "Bart", Score = 13245 } }, JsonRequestBehavior.AllowGet);
+                          }).Take(10).ToList();
             return Json(scores, JsonRequestBehavior.AllowGet);
         }
 
@@ -63,8 +62,9 @@ namespace TPP63_MVC.Controllers
             Models.Entities db = new Models.Entities();
             
             Score score = new Score {
-                // Username
-
+                UserID = username,
+                Score1 = 0,
+                DateScore = DateTime.Now,
                 TailleJeu = (byte)size,
                 NiveauDifficulte = (byte)difficulty
             };
@@ -72,7 +72,8 @@ namespace TPP63_MVC.Controllers
             db.Scores.Add(score);
 
             try {
-                db.SaveChangesAsync();
+                db.SaveChanges();
+                //db.SaveChangesAsync();
             }
             catch (Exception ex) {
                 // db. revert changes?
@@ -98,8 +99,10 @@ namespace TPP63_MVC.Controllers
                          
             score.Score1 = newScore;
 
-            try {
-                db.SaveChangesAsync();
+            try
+            {
+                db.SaveChanges();
+                //db.SaveChangesAsync();
             }
             catch (Exception ex) {
                 // db. revert changes?
