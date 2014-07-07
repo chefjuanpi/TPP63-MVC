@@ -5,13 +5,15 @@ namespace TPP63_MVC.Models
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
+        [Display(Name = "Avatar")]
+        public int Avatar { get; set; }
+        
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
-        [Display(Name = "Avatar")]
-        public int Avatar { get; set; }
+
     }
 
     public class ExternalLoginListViewModel

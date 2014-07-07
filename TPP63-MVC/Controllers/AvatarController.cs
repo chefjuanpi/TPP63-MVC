@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using TPP63_MVC.Models;
 
 namespace TPP63_MVC.Controllers
 {
@@ -55,6 +57,34 @@ namespace TPP63_MVC.Controllers
                              description = i.Avatar.Description
                          };
             return Json(imagen, JsonRequestBehavior.AllowGet);
+        }
+
+        [AllowAnonymous]
+        public ActionResult Changer()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Changer(changerViewModel model)
+        {
+            var guid = model.id;
+            int avg = model.Avatar;
+
+            Entities db = new Entities();
+            AspNetUser u = db.AspNetUsers.Single(us => us.Id == guid);
+            u.IdAvatar = avg;
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                // Provide for exceptions.
+            }
+            return RedirectToAction("Manage", "Account");
         }
 
     }

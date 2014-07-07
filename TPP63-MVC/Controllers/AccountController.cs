@@ -126,23 +126,11 @@ namespace TPP63_MVC.Controllers
                 var guid = user.Id;
                 int avg = model.Avatar;
 
-                Models.Entities db = new Entities();
-                AspNetUser u = db.AspNetUsers.Single(us => us.Id == guid);
-                u.IdAvatar = avg;
-                
-                try
-                {
-                    await db.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    // Provide for exceptions.
-                }
-
                 if (result.Succeeded)
                 {
                     await SignInAsync(user, isPersistent: false);
+
+                    await sauverAvatar(guid, avg);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -160,6 +148,23 @@ namespace TPP63_MVC.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+        private static async Task sauverAvatar(string guid, int avg)
+        {
+            Entities db = new Entities();
+            AspNetUser u = db.AspNetUsers.Single(us => us.Id == guid);
+            u.IdAvatar = avg;
+
+            try
+            {
+                await db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                // Provide for exceptions.
+            }
         }
 
         //
@@ -453,14 +458,28 @@ namespace TPP63_MVC.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
+
+                if (model.Avatar < 1)
+                {
+                    ViewBag.message = "Selectioner un Avatar Avant";
+                    return View(model);
+                }
+                else ViewBag.message = "";
+
                 var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
                 IdentityResult result = await UserManager.CreateAsync(user);
+
+                var guid = user.Id;
+                int avg = model.Avatar;
+
                 if (result.Succeeded)
                 {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {
                         await SignInAsync(user, isPersistent: false);
+
+                        await sauverAvatar(guid, avg);
                         
                         // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                         // Send an email with this link

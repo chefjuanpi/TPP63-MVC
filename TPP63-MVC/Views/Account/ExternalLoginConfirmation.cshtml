@@ -15,6 +15,7 @@
  @Html.HiddenFor(m => m.Avatar, new { id = "avatar123" })
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
+<div class="text-danger">@ViewBag.message</div>
 
 
     <p class="text-info">
@@ -76,20 +77,19 @@
              templateAvatars = Handlebars.compile($("#AvatarsTemplate").html());
              templateImg = Handlebars.compile($("#imgTemplate").html());
              $.getJSON("../Avatar/GetAvatars", null, function (data) {
-                 console.log(data.length);
                      var result = templateAvatars(data);
                      $("#avatarList").html(result);
                      $(".Avatar").click(function () {
                          var id = this.id;
                          $("#avatar123").val(id);
 
-                         console.log(id);
                          $.getJSON("../Avatar/GetImg", { IDAvatar: id }, function(data){
                              var result = templateImg(data);
                              $("#imgcontainer").html(result);
                          });
                      });
-                });
+             });
+            
              });
     </script>
     @Scripts.Render("~/bundles/jqueryval")

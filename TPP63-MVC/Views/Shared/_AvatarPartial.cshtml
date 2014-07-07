@@ -1,4 +1,6 @@
-﻿<style>
+﻿@model TPP63_MVC.Models.changerViewModel;
+
+<style>
     .Avatar:hover {
         cursor: pointer;
         color: red;
@@ -6,13 +8,7 @@
 </style>
 
 
-<script id="AvatarsTemplate" type="text/x-handlebars-template">
-    {{#each}}
 
-    <b class="Avatar" id="{{IdAvatar}}">{{Nom}}</b>
-    <br />
-    {{/each}}
-</script>
 
 <script id="imgTemplate" type="text/x-handlebars-template">
     {{#each}}
@@ -27,13 +23,14 @@
 
             templateAvatars = Handlebars.compile($("#AvatarsTemplate").html());
             templateImg = Handlebars.compile($("#imgTemplate").html());
+            $("#id123").val("@User.Identity.GetUserId()");
             $.getJSON("../Avatar/GetAvatars", null, function (data) {
                 console.log(data.length);
                     var result = templateAvatars(data);
                     $("#avatarList").html(result);
                     $(".Avatar").click(function () {
                         var id = this.id;
-                        console.log(id);
+                        $("#avatar123").val(id);
                         $.getJSON("../Avatar/GetImg", { IDAvatar: id }, function(data){
                             var result = templateImg(data);
                             $("#imgcontainer").html(result);
@@ -43,9 +40,19 @@
             });
 </script>
 
-<div class="row">
+@using (Html.BeginForm("Changer", "Avatar", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
 
+<div class="row">
+@Html.HiddenFor(model => model.Avatar, new { id = "avatar123" })
+@Html.HiddenFor(model => model.id, new { id = "id123" })
     <div id="imgcontainer" class="col-md-6"></div>
     <div id="avatarList" class="col-md-6"></div>
 </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="Changer Avatar" />
+                </div>
+            </div>
+}
 
