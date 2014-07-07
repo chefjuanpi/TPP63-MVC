@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-  @*<base href="http://s.fotorama.io/okonechnikov/">*@
+ 
 
 <div class="jumbotron">
     ICI la galerie d'imagenes qui serve comme guide du jeu, sont fait ou dernier avec immpresions d'ecran
@@ -27,6 +27,10 @@
 
         <div class="col-md-3">
             <div id="gameMenu">
+                <div id="prixContainer">
+                    <i id="PrixLogo" style="font-size:200px; color:#33053e" ></i>
+                    <h3 id="wow"></h3>
+                </div>
                 <div id="scoreDiv">Score: 0</div> <br />
                 <select id="cboSize"></select> <br />
                 <select id="cboDifficultyLevel"></select> <br />
@@ -44,7 +48,7 @@
         G.Init(G.Sizes[2], G.Difficulties[0], ById('gameContainer'));
 
         G.GameStarted = function() {
-            /*<input id="username" type="hidden" value="@User.Identity.Name" />
+            /*<input id="username" type="hidden" value="" />
             var username = ById('txtUsername').value;
                 
             $.getJSON("../Home/CreateScore", { Username: username, Size: size, Difficulty: difficulty }, function(scoreID) {
@@ -58,6 +62,8 @@
         
         G.ScoreUpdated = function (clusterSize, newScore) {
             scoreDiv.innerHTML = "Score: " + newScore;
+            $.Prix(clusterSize);
+
             
             if (G.ScoreID !== -1) {
                 /*$.getJSON("../Home/UpdateScore", { ScoreID: G.ScoreID, NewScore: newScore }, function(updateSuccessful) {
@@ -87,10 +93,57 @@
 
     StartNewGame = function () {
         G.CleanUpImgs();
+        $.Prix(0);
 
         var newSize = ById('cboSize').options[ById('cboSize').selectedIndex].value;
         var newDiff = ById('cboDifficultyLevel').options[ById('cboDifficultyLevel').selectedIndex].value;
 
         G.Init(G.Sizes[newSize], G.Difficulties[newDiff], ById('gameContainer'));
     };
+
+    $.Prix = function (clusterSize) {
+        if (clusterSize < 5) {
+            icon = "";
+            msg = ""; 
+            c= 'black'; 
+        }
+        else if (clusterSize > 5 && clusterSize < 11) {
+            c = "red";
+            icon = 'fa fa-flag';
+            msg = "wow!! " + clusterSize + " Clusters";
+           
+        }
+        else if (clusterSize > 10 && clusterSize < 16) {
+            c = "black";
+            icon = 'fa fa-flag-checkered';
+            msg = "wow!! " + clusterSize + " Clusters";
+        }
+        else if (clusterSize > 15 && clusterSize < 26) {
+            c = "blue";
+            icon = 'fa fa-gamepad';
+            msg = "Acro!! " + clusterSize + " Clusters";
+        }
+        else if (clusterSize > 25 && clusterSize < 51) {
+            c = "#ff6a00";
+            icon = 'fa fa-graduation-cap';
+            msg = "Niveau des Éxperts " + clusterSize + " Clusters";
+        }
+        else if (clusterSize > 50 && clusterSize < 101) {
+            c = "#33053e";
+            icon = 'fa fa-trophy';
+            msg = "Machine!! " + clusterSize + " Clusters";
+        }
+        else if (clusterSize > 100) {
+            c = "green";
+            icon = 'fa fa-reddit';
+            msg = "Alien!! " + clusterSize + " Clusters";
+        }
+
+        $("#PrixLogo").css('color', c);
+        $("#PrixLogo").removeAttr("class");
+        $("#PrixLogo").addClass(icon);
+        wow.innerHTML = msg;
+
+
+    }
 </script>

@@ -42,6 +42,12 @@
                     </div>
                 </div>
 
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="Register" />
+                </div>
+            </div>
+
             </div>
 
             <div class="col-md-8">
@@ -53,57 +59,10 @@
                         color: red;
                     }
                 </style>
-
-
-                <script id="AvatarsTemplate" type="text/x-handlebars-template">
-                    {{#each}}
-
-                    <b class="Avatar" id="{{IdAvatar}}">{{Nom}}</b>
-                    <br />
-                    {{/each}}
-                </script>
-
-                <script id="imgTemplate" type="text/x-handlebars-template">
-                    {{#each}}
-                    <img src="../Images/Avatars/{{Source}}" id="{{Id}}" />
-                    <p><b>Description :</b>{{description}}</p>
-                    {{/each}}
-                </script>
-                <script type="text/javascript">
-    templateAvatars = null;
-    templateImg = null;
-        $(function () {
-
-            templateAvatars = Handlebars.compile($("#AvatarsTemplate").html());
-            templateImg = Handlebars.compile($("#imgTemplate").html());
-            $.getJSON("../Avatar/GetAvatars", null, function (data) {
-                console.log(data.length);
-                    var result = templateAvatars(data);
-                    $("#avatarList").html(result);
-                    $(".Avatar").click(function () {
-                        var id = this.id;
-                        $("#avatar123").val(id);
-
-                        console.log(id);
-                        $.getJSON("../Avatar/GetImg", { IDAvatar: id }, function(data){
-                            var result = templateImg(data);
-                            $("#imgcontainer").html(result);
-                        });
-                    });
-                });
-            });
-                </script>
-
                 <div class="row">
 
                     <div id="imgcontainer" class="col-md-6"></div>
                     <div id="avatarList" class="col-md-6"></div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default" value="Register" />
                 </div>
             </div>
 
@@ -112,12 +71,46 @@
 }
 
 
-
-
-
-
-
 @section Scripts {
+    <script id="AvatarsTemplate" type="text/x-handlebars-template">
+        {{#each}}
+
+        <b class="Avatar" id="{{IdAvatar}}">{{Nom}}</b>
+        <br />
+        {{/each}}
+    </script>
+
+    <script id="imgTemplate" type="text/x-handlebars-template">
+        {{#each}}
+        <img src="../Images/Avatars/{{Source}}" id="{{Id}}" />
+        <p><b>Description :</b>{{description}}</p>
+        {{/each}}
+    </script>
+
+    <script type="text/javascript">
+        templateAvatars = null;
+        templateImg = null;
+        $(function () {
+
+             templateAvatars = Handlebars.compile($("#AvatarsTemplate").html());
+             templateImg = Handlebars.compile($("#imgTemplate").html());
+             $.getJSON("../Avatar/GetAvatars", null, function (data) {
+                 console.log(data.length);
+                     var result = templateAvatars(data);
+                     $("#avatarList").html(result);
+                     $(".Avatar").click(function () {
+                         var id = this.id;
+                         $("#avatar123").val(id);
+
+                         console.log(id);
+                         $.getJSON("../Avatar/GetImg", { IDAvatar: id }, function(data){
+                             var result = templateImg(data);
+                             $("#imgcontainer").html(result);
+                         });
+                     });
+                });
+             });
+    </script>
     @Scripts.Render("~/bundles/jqueryval")
 }
 

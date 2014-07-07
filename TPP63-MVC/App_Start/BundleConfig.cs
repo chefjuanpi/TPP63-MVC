@@ -29,7 +29,9 @@ namespace TPP63_MVC
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/fonts/font-awesome/css/font-awesome.css",
                       "~/Content/site.css",
+         
                       "~/Content/fotorama.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,

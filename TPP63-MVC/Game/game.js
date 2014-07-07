@@ -149,6 +149,6 @@ var G = { // G: Game
         G.CleanUpFloodFill();
     },
 
-    ScoreUpdated: function (clusterSize, newScore) { }
+    ScoreUpdated: function (clusterSize, newScore) { }      ,
     GameStarted: function () { }
 };

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TPP63_MVC.Models;
 
 namespace TPP63_MVC.Controllers
 {
@@ -63,14 +64,15 @@ namespace TPP63_MVC.Controllers
             
             Score score = new Score {
                 // Username
-                Size = size,
-                Difficulty = difficulty
+
+                TailleJeu = (byte)size,
+                NiveauDifficulte = (byte)difficulty
             };
 
-            db.Scores.InsertOnSubmit(score);
+            db.Scores.Add(score);
 
             try {
-                db.SubmitChanges();
+                db.SaveChangesAsync();
             }
             catch (Exception ex) {
                 // db. revert changes?
@@ -91,13 +93,13 @@ namespace TPP63_MVC.Controllers
             Models.Entities db = new Models.Entities();
             
             var score = (from s in db.Scores
-                         s.ScoreID == scoreID
+                         where s.ScoreID == scoreID
                          select s).Single();
                          
             score.Score1 = newScore;
 
             try {
-                db.SubmitChanges();
+                db.SaveChangesAsync();
             }
             catch (Exception ex) {
                 // db. revert changes?
