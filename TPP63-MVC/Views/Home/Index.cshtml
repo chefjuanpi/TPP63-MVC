@@ -9,14 +9,14 @@
 <br />
 <div class="jumbotron">
     <div class="fotorama" data-width=95% data-ratio="800/450" data-max-width="100%" data-autoplay="3000"
-data-allowfullscreen="true" data-transition="slide">
-    
-<img src="~/Images/galerie/01.png">     
- <img src="~/Images/galerie/02.png">
+        data-allowfullscreen="true" data-transition="slide">
+
+        <img src="Images/galerie/01.png"/>     
+        <img src="Images/galerie/02.png" />
+        <img src="Images/galerie/03.png" />
+        <img src="Images/galerie/04.png" />
+<div><a href="~/Account/Login" ><img src="Images/galerie/05.png" /></a></div>
       
-      <img src="~/Images/galerie/03.png">
-      <img src="~/Images/galerie/04.png">
-      <img src="~/Images/galerie/05.png">
     </div>
 </div>
 }
@@ -131,7 +131,7 @@ data-allowfullscreen="true" data-transition="slide">
     StartNewGame = function () {
         G.CleanUpImgs();
         $.Prix(0);
-
+        scoreDiv.innerHTML = "Score: 0" 
         var newSize = ById('cboSize').options[ById('cboSize').selectedIndex].value;
         var newDiff = ById('cboDifficultyLevel').options[ById('cboDifficultyLevel').selectedIndex].value;
 
@@ -153,34 +153,34 @@ data-allowfullscreen="true" data-transition="slide">
         else if (clusterSize > 5 && clusterSize < 11) {
             c = "red";
             icon = 'fa fa-flag';
-            msg = "wow!! " + clusterSize + " Bloques";
+            msg = "wow!! " + clusterSize + " Blocs";
         }
         else if (clusterSize > 10 && clusterSize < 16) {
             c = "black";
             icon = 'fa fa-flag-checkered';
-            msg = "wow!! " + clusterSize + " Bloques";
+            msg = "wow!! " + clusterSize + " Blocs";
             
         }
         else if (clusterSize > 15 && clusterSize < 26) {
             c = "blue";
             icon = 'fa fa-gamepad';
-            msg = "Acro!! " + clusterSize + " Bloques";
+            msg = "Acro!! " + clusterSize + " Blocs";
         }
         else if (clusterSize > 25 && clusterSize < 51) {
             c = "#ff6a00";
             icon = 'fa fa-graduation-cap';
-            msg = "Niveau des Éxperts " + clusterSize + " Bloques";
+            msg = "Niveau des Éxperts " + clusterSize + " Blocs";
         }
         else if (clusterSize > 50 && clusterSize < 101) {
             c = "#33053e";
             icon = 'fa fa-trophy';
-            msg = "Machine!! " + clusterSize + " Bloques";
+            msg = "Machine!! " + clusterSize + " Blocs";
             $( "#gameContainer" ).effect( "highlight", null, 700, callback );
         }
         else if (clusterSize > 100) {
             c = "green";
             icon = 'fa fa-reddit';
-            msg = "Alien!! " + clusterSize + " Bloques";
+            msg = "Alien!! " + clusterSize + " Blocs";
             $( "#gameContainer" ).effect( "highlight", null, 2000, callback );
         }
 

@@ -86,7 +86,8 @@ namespace TPP63_MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindAsync(model.Email, model.Password);
+                var userName = await UserManager.FindByEmailAsync(model.Email);
+                var user = await UserManager.FindAsync(userName.UserName, model.Password);
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
@@ -128,20 +129,6 @@ namespace TPP63_MVC.Controllers
 
                 if (result.Succeeded)
                 {
-                    Models.Entities db = new Entities();
-                    AspNetUser u = db.AspNetUsers.Single(us => us.Id == guid);
-                    u.IdAvatar = avg;
-
-                    try
-                    {
-                        await db.SaveChangesAsync();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        // Provide for exceptions.
-                    }
-
                     await SignInAsync(user, isPersistent: false);
 
                     await sauverAvatar(guid, avg);
